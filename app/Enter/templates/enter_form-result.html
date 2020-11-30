@@ -1,0 +1,116 @@
+{% extends 'enter.html' %}
+{% block title %} My_Guard | Enter-Form {% endblock %}
+{% block content %}
+    <div class="container mx-5 my-5">
+        <h1>FORM Result</h1> <br>
+        <div class="card bg-light">
+            <div class="container-fluid">
+                <!-- Timestamp -->
+                {% if timestamp %}
+                <h5 class="my-3"><i class="far fa-clock"></i> <b>{{ timestamp }} | <i class="fas fa-shield-alt"></i> <span class="badge badge-warning">{{ type }}</span></b></h5> <hr>
+                {% else %}
+                <p class="lead"><i class="far fa-clock"></i> Failed to load timestamp</p> <hr>
+                {% endif %}
+
+                
+
+                <!-- Temperature Validity -->
+                {% if temp_validity %}
+
+                    <!-- If ID Exixts -->
+                    {% if IDExists %}
+
+                    <!-- If Face is Recognized -->
+                    {% if Recognition %}
+
+                        <!--Image -->
+                        {% if file %}
+                        <h5 class="my-2">
+                            🖼️ PHOTO:
+                        </h5>
+                        <img src="images/{{ file }}" class="mb-2" style="width:100px; height:100px" /> <hr>
+                        {% else %}
+                        <p class="lead"><i class="far fa-image"></i>Failed to load Image.</p> <hr>
+                        {% endif %}
+
+                        <!-- Temperature -->
+                        {% if temp %}
+                        <h5 class="my-2">
+                            🌡️ Temperature:
+                        </h5>
+                        <div class="card mb-2 ">
+                            <div class="card-body">
+                            {{ temp }}
+                            </div>
+                        </div> <hr>
+                        {% else %}
+                        <h5 class="my-2">
+                            Temperature:
+                        </h5>
+                        <div class="card mb-2 ">
+                            <div class="card-body">
+                            <p class="lead">Failed to load Temperature</p>
+                            </div>
+                        </div> <hr>
+                        {% endif %}
+
+                        <!-- User ID -->
+                        {% if user_id %}
+                        <h5 class="my-2">
+                            🆔 ID:
+                        </h5> 
+                        <span class="badge badge-warning">Notice</span><b>You cannot enter without knowing your ID.</b></label>
+                        <div class="card mb-2">
+                            <div class="card-body">
+                            {{ user_id }}
+                            </div>
+                        </div> <hr>
+                        {% else %}
+                        <h5 class="my-2">
+                            🆔 ID:
+                        </h5> 
+                        <span class="badge badge-warning">Notice</span><b>You cannot enter without knowing your ID.</b></label>
+                        <div class="card mb-2">
+                            <div class="card-body">
+                            <p class="lead">Failed to load ID</p>
+                            </div>
+                        </div> <hr>
+                        {% endif %}
+
+                    <!-- If Face is not Recognized -->
+                    {% else %}
+                    <h1 class="text-monospace"><i class="fas fa-exclamation-circle"></i> <b>404</b> Error : Face not Recognized</h1>
+                    <ul>
+                        <li><p class="lead">🖼️ Please check whether your image uploaded satisfies required conditions.</p></li>
+                        <li><p class="lead">🌐 Ensure you have an internet connection.</p></li>
+                    </ul> <hr>
+
+                    <!-- End Recognition -->
+                    {% endif %}
+
+                <!-- If ID doesnt exists -->
+                {% else %}
+                <h1 class="text-monospace"><i class="fas fa-exclamation-circle"></i> <b>404</b> Error : User not found</h1>
+                <ul>
+                    <li><p class="lead">🆔 Please check your ID.</p></li>
+                    <li><p class="lead">🌐 Ensure you have an internet connection.</p></li>
+                </ul> <hr>
+
+                <!-- End IDExists -->
+                {% endif %}
+
+                <!-- If temp is not valid -->
+                {% else %}
+                <h1 class="text-monospace"><i class="fas fa-exclamation-circle mr-2"></i><b>Entry Denied</b> </h1>
+                    <p class="lead">🌡️ Your temperature is either high or invalid.</p>
+                <hr>
+                {% endif %}
+                
+                <div>
+                    <a class="btn btn-dark my-2" href="/">Done</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}

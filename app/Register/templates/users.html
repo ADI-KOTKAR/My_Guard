@@ -1,0 +1,33 @@
+{% extends 'register.html' %}
+{% block title %} My_Guard | Register-Users {% endblock %}
+{% block content %}
+    <div class="container mx-5 my-5">
+        <h1><i class="fas fa-users"></i> Users</h1>
+        <p class="lead">Total records: <b> {{ total_records-1 }}</b></p>
+        <div class="card bg-light">
+            <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">🆔 ID</th>
+                    <th scope="col">📃 Name</th>
+                    <th scope="col"><i class="far fa-clock"></i> Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% if users %}
+                    {% for user in users %}
+                        <tr>
+                            <th scope="row"> {{ loop.index }} </th>
+                            <td> {{ user[0] }} </td>
+                            <td> {{ user[1] }} </td>
+                            <td> {{ user[2] }} </td>
+                        </tr>
+                    {% endfor %}
+                  {% endif %}
+                </tbody>
+              </table>
+        </div>
+    </div>
+    
+{% endblock %}

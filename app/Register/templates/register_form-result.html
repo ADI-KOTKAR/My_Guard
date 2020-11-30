@@ -1,0 +1,59 @@
+{% extends 'register.html' %}
+{% block title %} My_Guard | Register-Form {% endblock %}
+{% block content %}
+    <div class="container mx-5 my-5">
+        <h1>REGISTERED DETAILS</h1>
+        <div class="card bg-light">
+            <div class="container-fluid">
+                {% if timestamp %}
+                    <h5 class="my-2"> {{ timestamp }} </h5>
+                {% else %}
+                    <p class="my-2"> Failed to load timestamp </p>
+                {% endif %}
+                <hr>
+                {% if file %}
+                    <h5 class="my-2">
+                        🖼️ PHOTO:
+                    </h5>
+                    <img src="images/{{ file }}" class="mb-2" style="width:100px; height:100px" />
+                {% else %}
+                    <p> No image selected</p>
+                    <br>
+                {% endif %}
+                    <hr>
+                {% if name %}
+                    <h5 class="my-2">
+                        📃 NAME:
+                    </h5>
+                    <div class="card mb-2 ">
+                        <div class="card-body">
+                          {{ name }}
+                        </div>
+                    </div>
+                {% else %}
+                    <p>No message recorded.</p>
+                {% endif %}
+                    <hr>
+                {% if user_id %}
+                    <h5 class="my-2">
+                        🆔 Auto-generated ID:
+                    </h5> 
+                    <span class="badge badge-warning">Notice</span><b>Pls note tour ID.</b></label>
+                    <div class="card mb-2">
+                        <div class="card-body">
+                          {{ user_id }}
+                        </div>
+                    </div>
+                {% else %}
+                    <p> No  ID</p>
+                    <br>
+                {% endif %}
+                    <hr>
+                <div>
+                    <a class="btn btn-dark my-2" href="/">Done</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}

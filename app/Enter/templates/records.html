@@ -1,0 +1,35 @@
+{% extends 'enter.html' %}
+{% block title %} My_Guard | Enter-Records {% endblock %}
+{% block content %}
+    <div class="container mx-5 my-5">
+        <h1><i class="fas fa-folder-open"></i> Records</h1>
+        <p class="lead">Total records: <b> {{ total_records-1 }}</b></p>
+        <div class="card bg-light">
+            <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">🆔 ID</th>
+                    <th scope="col">🌡️ Temperature</th>
+                    <th scope="col"><i class="far fa-clock"></i> Timestamp</th>
+                    <th scope="col"><i class="fas fa-arrow-circle-up"></i> In | <i class="fas fa-arrow-circle-down"></i> Out</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% if records %}
+                    {% for record in records %}
+                        <tr>
+                            <th scope="row"> {{ loop.index }} </th>
+                            <td> {{ record[0] }} </td>
+                            <td> {{ record[1] }} </td>
+                            <td> {{ record[2] }} </td>
+                            <td> <span class="badge badge-warning">{{ record[3] }}</span> </td>
+                        </tr>
+                    {% endfor %}
+                  {% endif %}
+                </tbody>
+              </table>
+        </div>
+    </div>
+    
+{% endblock %}

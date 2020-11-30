@@ -1,0 +1,15 @@
+## Root
+.vscode
+env
+*.env
+__pycache__/
+credentials.csv
+test_images/
+
+## Images
+*.jpg
+*.jpeg
+*.png
+
+# AWS Images
+!metrics/*.png
