@@ -1,6 +1,5 @@
 import boto3
 import csv
-from csv import writer
 import os
 import random
 import string
@@ -10,6 +9,7 @@ import datetime
 from dotenv import load_dotenv
 from flask import Blueprint, current_app, render_template, url_for, redirect, request, session, flash
 from werkzeug.utils import secure_filename
+from ..extensions import mongo
 
 register = Blueprint("register", __name__, static_folder="images", template_folder="templates")
 
@@ -43,11 +43,15 @@ def register_form_result():
             s3.Bucket('adis-aws-bucket').put_object(Key=str(image), Body=data)
         result = request.form
         timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
-        
-        # Writing in CSV
-        with open(os.path.join(current_app.config['REGISTER_IMAGES_FOLDER'], 'registered_users.csv'), 'a+', newline='') as write_obj:
-            csv_writer = writer(write_obj)
-            csv_writer.writerow([user_id, name, timestamp])
+
+        # MongoDB Atlas
+        user_entry = {
+            "_id": user_id,
+            "name": name,
+            "timestamp": timestamp
+        }
+        user_collection = mongo.db.users
+        user_collection.insert_one(user_entry)
         
         return render_template("register_form-result.html",
                                 result = result, 
@@ -58,14 +62,7 @@ def register_form_result():
 
 @register.route("/users")
 def users():
-    rows = []
-    with open(os.path.join(current_app.config['REGISTER_IMAGES_FOLDER'], 'registered_users.csv'), 'r') as csvfile:
-        csvreader = csv.reader(csvfile)
-        next(csvreader)
-        
-        for row in csvreader:
-            rows.append(row)
+    # Mongo DB Atlas - Users
+    results = mongo.db.users.find({})
+    return render_template("users.html", results=results)
 
-        total_records = csvreader.line_num
-
-    return render_template("users.html", users=rows, total_records=total_records)

@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from flask import Flask, render_template
 from app.Register.register import register
 from app.Enter.enter import enter
+from app.extensions import mongo
 
 REGISTER_IMAGES_FOLDER =  'app\\Register\\images'
 ENTER_IMAGES_FOLDER = 'app\\Enter\\images'
@@ -17,8 +18,11 @@ app.secret_key = "base1234"
 app.config['REGISTER_IMAGES_FOLDER'] = REGISTER_IMAGES_FOLDER
 app.config['ENTER_IMAGES_FOLDER'] = ENTER_IMAGES_FOLDER
 app.config['METRICS_FOLDER'] = METRICS_FOLDER
+app.config.from_object('settings')
 app.register_blueprint(register, url_prefix="/register")
 app.register_blueprint(enter, url_prefix="/enter")
+
+mongo.init_app(app)
 
 @app.after_request
 def add_header(r):

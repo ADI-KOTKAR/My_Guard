@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container mx-5 my-5">
         <h1><i class="fas fa-users"></i> Users</h1>
-        <p class="lead">Total records: <b> {{ total_records-1 }}</b></p>
+        <p class="lead"><img src="/metrics/mongodb.png" class="logo mb-2">MongoDB Atlas | Total records: <b> {{ results.count() }}</b></p>
         <div class="card bg-light">
             <table class="table">
                 <thead class="thead-dark">
@@ -15,13 +15,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% if users %}
-                    {% for user in users %}
+                  {% if results %}
+                    {% for user in results %}
                         <tr>
                             <th scope="row"> {{ loop.index }} </th>
-                            <td> {{ user[0] }} </td>
-                            <td> {{ user[1] }} </td>
-                            <td> {{ user[2] }} </td>
+                            <td> {{ user["_id"] }} </td>
+                            <td> {{ user["name"] }} </td>
+                            <td> {{ user["timestamp"] }} </td>
                         </tr>
                     {% endfor %}
                   {% endif %}

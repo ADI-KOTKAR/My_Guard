@@ -5,6 +5,7 @@ env
 __pycache__/
 credentials.csv
 test_images/
+settings.py
 
 ## Images
 *.jpg

@@ -1,7 +1,6 @@
 import boto3
 import botocore
 import csv
-from csv import writer
 import os
 import shutil
 import time
@@ -9,8 +8,17 @@ import datetime
 from dotenv import load_dotenv
 from flask import Blueprint, current_app, render_template, url_for, redirect, request, session, flash
 from werkzeug.utils import secure_filename
+from ..extensions import mongo
 
 enter = Blueprint("enter",  __name__, static_folder="images", template_folder="templates")
+
+'''
+Status codes:
+0 - Invalid Temperature
+1 - User Not Found
+2 - Face Not Recognized
+3 - All Details Verified
+'''
 
 @enter.route("/")
 def enter_details():
@@ -21,12 +29,37 @@ def enter_form_details():
     if request.method == 'POST':
         user_id = request.form['id']
         _type = request.form['type']
-
         temp = request.form['temp']
+        timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+
+        # DB connection
+        records_collection = mongo.db.records
+        find_user = list(mongo.db.users.find({"_id":user_id}))
+        if len(find_user) == 0:
+                name = None
+        else:
+            for x in find_user:
+                name = x['name']
+
+        # 0 - Invalid Entry
+        record_entry = {
+                "_id": user_id,
+                "name": name,
+                "temperature": temp,
+                "type": _type,
+                "timestamp": timestamp,
+                "status": "",
+                "status_code": None 
+            }
+
         if float(temp) > 97 and float(temp) < 99.5:
             temp_validity = True
         else:
             temp_validity = False
+            # 0 - Invalid Temperature
+            record_entry['status'] = "Denied: Invalid Temperature"
+            record_entry['status_code'] = 0
+            records_collection.insert_one(record_entry)
         
         if 'file' not in request.files:
             flash('No image found')
@@ -37,7 +70,6 @@ def enter_form_details():
                 
         if file and temp_validity:
             load_dotenv()
-            timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
             image = str(user_id)+"_upload"+".jpg"
             
             # Check if ID exists
@@ -51,6 +83,7 @@ def enter_form_details():
                 if e.response['Error']['Code'] == "404":
                     # The object does not exist.
                     IDExists = False
+
                 else:
                     # Something else has gone wrong.            
                     raise e
@@ -92,21 +125,31 @@ def enter_form_details():
                         for att in value:
                             if att['Similarity'] > 95:
                                 Recognition = True
-                                 #Writing in CSV
-                                with open(os.path.join(current_app.config['ENTER_IMAGES_FOLDER'], 'entry_records.csv'), 'a+', newline='') as write_obj2:
-                                    csv_writer2 = writer(write_obj2)
-                                    csv_writer2.writerow([user_id, temp, timestamp, _type])
-
+                                # 3 - Success
+                                record_entry['status'] = "Allowed: All Details Verified"
+                                record_entry['status_code'] = 3
+                                records_collection.insert_one(record_entry)
                             else:
-                                Recognition = False    
+                                Recognition = False 
+
+                        if not Recognition:
+                            # 2 - Face not recognized
+                            record_entry['status'] = "Denied: Face Not Recognized"
+                            record_entry['status_code'] = 2
+                            records_collection.insert_one(record_entry)   
             else:
-                Recognition = False 
+                Recognition = False
+                # 1 - User not found 
+                record_entry['status'] = "Denied: User Not Found"
+                record_entry['status_code'] = 1
+                records_collection.insert_one(record_entry)
         
         else:
             IDExists = False
             Recognition = False
             timestamp = None
         
+
         result = request.form
 
         return render_template( "enter_form-result.html",
@@ -122,14 +165,6 @@ def enter_form_details():
 
 @enter.route("/records")
 def users():
-    rows = []
-    with open(os.path.join(current_app.config['ENTER_IMAGES_FOLDER'], 'entry_records.csv'), 'r') as csvfile:
-        csvreader = csv.reader(csvfile)
-        next(csvreader)
-        
-        for row in csvreader:
-            rows.append(row)
-
-        total_records = csvreader.line_num
-
-    return render_template("records.html", records=rows, total_records=total_records)
+    # Mongo DB Atlas - Records
+    results = mongo.db.records.find({})
+    return render_template("records.html", results=results)
