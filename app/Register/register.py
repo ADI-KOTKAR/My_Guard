@@ -46,7 +46,7 @@ def register_form_result():
 
         # MongoDB Atlas
         user_entry = {
-            "_id": user_id,
+            "mg_id": user_id,
             "name": name,
             "timestamp": timestamp
         }

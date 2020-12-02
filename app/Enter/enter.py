@@ -34,7 +34,7 @@ def enter_form_details():
 
         # DB connection
         records_collection = mongo.db.records
-        find_user = list(mongo.db.users.find({"_id":user_id}))
+        find_user = list(mongo.db.users.find({"mg_id":user_id}))
         if len(find_user) == 0:
                 name = None
         else:
@@ -43,7 +43,7 @@ def enter_form_details():
 
         # 0 - Invalid Entry
         record_entry = {
-                "_id": user_id,
+                "mg_id": user_id,
                 "name": name,
                 "temperature": temp,
                 "type": _type,
