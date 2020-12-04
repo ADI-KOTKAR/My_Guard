@@ -1,0 +1,218 @@
+{% extends 'enter.html' %}
+{% block title %} My_Guard | Enter-Statistics {% endblock %}
+{% block content %}
+
+<!-- Chartist -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+<script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+<!-- Jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<style>
+    .circle {
+        height: 20px;
+        width: 20px;
+    }
+    .circle2 {
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+    }
+</style>
+
+
+
+<div class="jumbotron jumbotron-fluid mx-5 my-1">
+    <div class="container">
+      <h1 class="display-4"><i class="fas fa-chart-pie"></i> Statistics</h1>
+      <p class="lead"><img src="/metrics/mongodb.png" class="logo mb-2">MongoDB Atlas</p>
+      <div class="row">
+          <!-- Graph 1 -->
+          <div class="card col-5 rounded-lg mr-4">
+              <div class="row py-4">
+                  <div class="col-8">
+                    <div class="ct-chart ct-perfect-fourth" style="height: 300px; width: 300px;"></div>
+                  </div>
+                  <div class="col-4">
+                    <p class="lead"><b>Entry Results</b></p>
+                    <table class="table my-5">
+                        <tbody>
+                          <tr>
+                            <th scope="row"><div class="circle" style="background-color: #d70206;"></div></th>
+                            <td id="0">{{ status_code[0] }}</td>
+                          </tr>
+                          <tr>
+                            <th scope="row"><div class="circle" style="background-color: #f05b4f;"></div></th>
+                            <td id="1">{{ status_code[1] }}</td>
+                          </tr>
+                          <tr>
+                            <th scope="row"><div class="circle" style="background-color: #f4c63d;"></div></th>
+                            <td id="2">{{ status_code[2] }}</td>
+                          </tr>
+                          <tr>
+                            <th scope="row"><div class="circle" style="background-color: #d17905;"></div></th>
+                            <td id="3">{{ status_code[3] }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                  </div>
+                  <table class="table mt-2">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Result</th>
+                        <th scope="col">Reason</th>
+                        <th scope="col">Status Code</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row"><div class="circle2" style="background-color: #d70206;"></div></th>
+                        <td><span class="badge badge-danger">Denied</span></td>
+                        <td>Invalid Temperature</td>
+                        <td><span class="badge badge-primary">0</span></td>
+                      </tr>
+                      <tr>
+                        <th scope="row"><div class="circle2" style="background-color: #f05b4f;"></div></th>
+                        <td><span class="badge badge-danger">Denied</span></td>
+                        <td>User Not Found</td>
+                        <td><span class="badge badge-primary">1</span></td>
+                      </tr>
+                      <tr>
+                        <th scope="row"><div class="circle2" style="background-color: #f4c63d;"></div></th>
+                        <td><span class="badge badge-danger">Denied</span></td>
+                        <td>Face Not Recognized</td>
+                        <td><span class="badge badge-primary">2</span></td>
+                      </tr>
+                      <tr>
+                        <th scope="row"><div class="circle2" style="background-color: #d17905;"></div></th>
+                        <td><span class="badge badge-success">Allowed</span></td>
+                        <td>All Details Verified</td>
+                        <td><span class="badge badge-primary">3</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </div>
+          </div>
+
+          <!-- Graph 2 -->
+          <div class="card col-5 py-4">
+            <div id="chart_div" style="width: 900px; height: 300px;"></div>
+            <hr>
+            <div id="piechart_3d" style="width: 400px; height: 300px;"></div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<script>
+    class MyCharts{
+
+        constructor(xData, yData, xData2, yData2)
+        {
+            this.xData = xData
+            this.yData = yData
+            this.xData2 = xData2
+            this.yData2 = yData2
+        }
+
+        createGraph()
+        {
+            var data = {
+                // labels: this.xData,
+                series: this.yData
+            }
+            var data2 = {
+                labels: this.xData2,
+                series: this.yData2
+            }
+            // new Chartist.Pie('.ct-chart2', data2, {
+            //     donut: true,
+            //     donutWidth: 60,
+            //     donutSolid: true,
+            //     startAngle: 270,
+            //     showLabel: true 
+            // })
+            new Chartist.Pie('.ct-chart', data, {
+                donut: true,
+                donutWidth: 60,
+                donutSolid: true,
+                startAngle: 270,
+                showLabel: true
+            })
+        }
+
+        
+    }
+
+    // Object
+
+    //Graph 1
+    var xData = ['0', '1', '2', '3']
+    var yData = '{{ status_code }}'
+    yData = yData.replace(/[\[\]']+/g, "").replace(/,/g,"").split(" ")
+    for(var i=0; i<yData.length; i++) yData[i] = parseInt(yData[i])
+
+    var obj = new MyCharts(xData, yData, xData2, yData2) 
+    obj.createGraph()
+
+    //Graph2
+    var xData2 = ['IN', 'OUT']
+    var yData2 = '{{ entry_type }}'
+    var total_logs = '{{ total_logs }}'
+    var total_users = '{{ total_users }}'
+
+    yData2 = yData2.replace(/[\[\]']+/g, "").replace(/,/g,"").split(" ")
+    for(var j=0; j<yData2.length; j++) yData2[j] = parseInt(yData2[j])
+    total_logs = parseInt(total_logs)
+    total_users = parseInt(total_users)
+
+
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.load("current", {packages:["corechart"]});
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(drawChart2);
+
+    function drawChart() {
+
+      var data = google.visualization.arrayToDataTable([
+         ['Element', 'Count', { role: 'style' }],
+         ['Users', total_users, 'green'],            
+         ['Enrty Logs', total_logs, 'red'],            
+      ]);
+
+      var options = {'title':'Users Count | Entry Logs Count',
+                    'width':400,
+                    'height':300};
+
+      var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+
+
+    //Graph3
+    function drawChart2() {
+        var data = google.visualization.arrayToDataTable([
+          ['Entry Type', 'IN | OUT'],
+          ['IN', yData2[0]],
+          ['OUT', yData2[1]],
+        ]);
+
+        var options = {
+          title: 'Entry Type: IN | OUT',
+          is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        chart.draw(data, options);
+      }
+
+</script>
+
+{% endblock %}

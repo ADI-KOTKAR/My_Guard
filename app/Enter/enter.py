@@ -2,6 +2,7 @@ import boto3
 import botocore
 import csv
 import os
+import re
 import shutil
 import time
 import datetime
@@ -9,6 +10,9 @@ from dotenv import load_dotenv
 from flask import Blueprint, current_app, render_template, url_for, redirect, request, session, flash
 from werkzeug.utils import secure_filename
 from ..extensions import mongo
+# from bson.json_util import dumps
+# from bson.objectid import ObjectId
+import json
 
 enter = Blueprint("enter",  __name__, static_folder="images", template_folder="templates")
 
@@ -168,3 +172,40 @@ def users():
     # Mongo DB Atlas - Records
     results = mongo.db.records.find({})
     return render_template("records.html", results=results)
+
+@enter.route("/stats")
+def stats():
+    # Mongo DB Atlas - Records
+    records = mongo.db.records.find()
+
+    # Statistics
+    '''Count of Users'''
+    total_users = mongo.db.users.find({}).count()
+
+    '''Count of Logs'''
+    total_logs = mongo.db.records.find({}).count()
+
+    '''In/Out'''
+    entry_type = [
+        mongo.db.records.find({"type": "IN"}).count(),
+        mongo.db.records.find({"type": "OUT"}).count()
+    ]
+
+    ''' 0,1,2,3 ''' 
+    status_code = []
+    for code in range(4):
+        code_records = mongo.db.records.find({"status_code": code})
+        status_code.append(code_records.count())
+
+    response = []
+    for record in records:
+        record['_id'] = str(record['_id'])
+        response.append(record)
+
+    return render_template("stats.html", 
+                                records_json=json.dumps(response),
+                                 status_code=status_code, 
+                                 entry_type=entry_type,
+                                 total_logs=total_logs,
+                                 total_users=total_users
+                        )

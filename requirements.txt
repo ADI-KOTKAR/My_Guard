@@ -1,5 +1,7 @@
+bcrypt==3.2.0
 boto3==1.16.26
 botocore==1.19.26
+cffi==1.14.4
 click==7.1.2
 dnspython==2.0.0
 Flask==1.1.2
@@ -8,7 +10,8 @@ itsdangerous==1.1.0
 Jinja2==2.11.2
 jmespath==0.10.0
 MarkupSafe==1.1.1
-pymongo==3.11.1
+pycparser==2.20
+pymongo==3.11.2
 python-dateutil==2.8.1
 python-dotenv==0.15.0
 s3transfer==0.3.3
