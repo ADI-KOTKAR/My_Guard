@@ -14,7 +14,7 @@
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://drive.google.com/file/d/1TG90kIOGDsKfBk17zwHMx9bT8tkDvgGx/view?usp=sharing">View Demo</a>
+    <a href="https://docs.google.com/document/d/1KF65t9N9TMkO4DHqI02kcHO1DgoCmEi7_cdcJBLKTSE/edit?usp=sharing">View Demo</a>
   </p>
 </p>
 
@@ -32,7 +32,7 @@
 * [Resources](#resources)
 * [Getting Started](#getting-started)
 * [Workflow](#workflow)
-
+* [Contact](#contact)
 
 
 <!-- ABOUT THE PROJECT -->
@@ -161,6 +161,7 @@ Open the localhost link - [http://127.0.0.1:5000/](http://127.0.0.1:5000/) , thi
 
 6.  The Amazon CloudWatch sends a snapshot of metrics for monitoring the API request.
 
+## Contact
 
 
 
