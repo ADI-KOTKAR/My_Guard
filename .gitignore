@@ -11,6 +11,7 @@ settings.py
 *.jpg
 *.jpeg
 *.png
+!images/*.png
 
 # AWS Images
 !metrics/*.png
