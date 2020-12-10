@@ -97,21 +97,21 @@ pip install Flask Flask-PyMongo bcrypt boto3 dnspython
 #### File Configuration
 1.  Generate AWS **credentials** (csv file) by following this [link](https://www.youtube.com/watch?v=Jtr0gyM9rCI). Create **.env** files in the root directory and the directories shown below.
 ```
-	📦app  
-	 ┣ 📂Enter  
-	 ┃ ┣ 📂images   
-	 ┃ ┣ 📂templates   
-	 ┃ ┣ 📂__pycache__   
-	 ┃ ┣ 📜.env  
-	 ┃ ┣ 📜enter.py  
-	 ┃ ┗ 📜__init__.py  
-	 ┣ 📂Register  
-	 ┃ ┣ 📂templates  
-	 ┃ ┣ 📂__pycache__   
-	 ┃ ┣ 📜.env  
-	 ┃ ┣ 📜register.py  
-	 ┃ ┗ 📜__init__.py 
-	 ┗ 📜extensions.py
+📦app  
+ ┣ 📂Enter  
+ ┃ ┣ 📂images   
+ ┃ ┣ 📂templates   
+ ┃ ┣ 📂__pycache__   
+ ┃ ┣ 📜.env  
+ ┃ ┣ 📜enter.py  
+ ┃ ┗ 📜__init__.py  
+ ┣ 📂Register  
+ ┃ ┣ 📂templates  
+ ┃ ┣ 📂__pycache__   
+ ┃ ┣ 📜.env  
+ ┃ ┣ 📜register.py  
+ ┃ ┗ 📜__init__.py 
+ ┗ 📜extensions.py
 ```
 Mention the credentials generated in the **.env** file.
 ```
