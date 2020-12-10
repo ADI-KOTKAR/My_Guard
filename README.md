@@ -59,7 +59,9 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 #### Clone the Repo
-`git clone https://github.com/ADI-KOTKAR/My_Guard.git`
+```
+git clone https://github.com/ADI-KOTKAR/My_Guard.git
+````
 
 #### Create Free Accounts
 Create free accounts of *MongoDB Atlas* and *AWS*. 
@@ -70,7 +72,7 @@ Install Python 3 in your system. [click here](https://www.python.org/downloads/)
 #### Create a Virtual Environment.
 - Installing virtualenv package of Python.
 ```
-pip3 install virtualenv
+pip install virtualenv
 ```
 - Creating a virtual environment named 'venv'.
 ```
@@ -85,12 +87,12 @@ venv\Scripts\activate
 - Make sure environment is activated. `(env)`
 - Using Requirements File. **(Recommended)**
 ```
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 ```
 - Individually installing packages.
 	##### ***Flask | Flask-PyMongo | bcrypt | boto3 | dnspython***
 ```
-pip3 install Flask Flask-PyMongo bcrypt boto3 dnspython
+pip install Flask Flask-PyMongo bcrypt boto3 dnspython
 ```
 #### File Configuration
 1.  Generate AWS **credentials** (csv file) by following this [link](https://www.youtube.com/watch?v=Jtr0gyM9rCI). Create **.env** files in the root directory and the directories shown below.
