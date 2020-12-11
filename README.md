@@ -139,6 +139,10 @@ Open the localhost link - [http://127.0.0.1:5000/](http://127.0.0.1:5000/) , thi
 ## Workflow
 
 #### Register Visitor
+<p align="center">
+  <img width="506" height="350" src="https://github.com/ADI-KOTKAR/My_Guard/blob/master/images/My_Guard_register.png">
+</p>
+
 1.  User sends his name and image through the registration form on application.
 
 2.  After verifying all fields, the image is uploaded on Amazon S3 Bucket
@@ -147,11 +151,12 @@ Open the localhost link - [http://127.0.0.1:5000/](http://127.0.0.1:5000/) , thi
 
 4.  The Amazon CloudWatch sends a snapshot of metrics for monitoring the API request
 
-<p align="center">
-  <img src="https://github.com/ADI-KOTKAR/My_Guard/blob/master/images/My_Guard_register.PNG">
-</p>
 
 #### Entry of Visitor
+
+<p align="center">
+  <img width="506" height="350" src="https://github.com/ADI-KOTKAR/My_Guard/blob/master/images/My_Guard_entry.png">
+</p>
 
 1.  Registered User sends his ID, temperature, entry_type (IN/OUT), and image through the entry form on application.
 
@@ -165,13 +170,14 @@ Open the localhost link - [http://127.0.0.1:5000/](http://127.0.0.1:5000/) , thi
 
 6.  The Amazon CloudWatch sends a snapshot of metrics for monitoring the API request.
 
-<p align="center">
-  <img src="https://github.com/ADI-KOTKAR/My_Guard/blob/master/images/My_Guard_entry.PNG">
-</p>
 
 ## Contact
 
-**Aditya Kotkar** - (adityakotkar75@gmail.com)[adityakotkar75@gmail.com]
+**Aditya Kotkar** -[adityakotkar75@gmail.com](adityakotkar75@gmail.com)
 
+## License
+
+- Project link: [My_Guard](https://github.com/ADI-KOTKAR/My_Guard)
+- [License](https://github.com/ADI-KOTKAR/My_Guard/blob/master/LICENSE)
 
 
