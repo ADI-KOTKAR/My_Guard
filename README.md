@@ -147,6 +147,10 @@ Open the localhost link - [http://127.0.0.1:5000/](http://127.0.0.1:5000/) , thi
 
 4.  The Amazon CloudWatch sends a snapshot of metrics for monitoring the API request
 
+<p align="center">
+  <img src="https://github.com/ADI-KOTKAR/My_Guard/blob/master/images/My_Guard_register.PNG">
+</p>
+
 #### Entry of Visitor
 
 1.  Registered User sends his ID, temperature, entry_type (IN/OUT), and image through the entry form on application.
@@ -161,8 +165,13 @@ Open the localhost link - [http://127.0.0.1:5000/](http://127.0.0.1:5000/) , thi
 
 6.  The Amazon CloudWatch sends a snapshot of metrics for monitoring the API request.
 
+<p align="center">
+  <img src="https://github.com/ADI-KOTKAR/My_Guard/blob/master/images/My_Guard_entry.PNG">
+</p>
+
 ## Contact
 
+**Aditya Kotkar** - (adityakotkar75@gmail.com)[adityakotkar75@gmail.com]
 
 
 
